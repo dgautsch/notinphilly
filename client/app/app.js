@@ -45,10 +45,6 @@
           templateUrl: 'app/admin/admin-template.html',
           controller: 'AdminController'
         })
-        .when('/login', {
-          templateUrl: 'app/user/login-template.html',
-          controller: 'AdminController'
-        })
         .otherwise({
           redirectTo: '/'
         });
