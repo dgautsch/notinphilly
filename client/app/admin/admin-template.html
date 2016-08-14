@@ -13,7 +13,8 @@
       </div>
     </div>
     <div class="row offset">
-      <div ng-include src="'app/admin/users-template.html'"></div>
+      <div ng-if="url === '/admin/users' || url ==='/admin'" ng-include src="'app/admin/users-template.html'"></div>
+      <div ng-if="url === '/admin/streets'" ng-include src="'app/admin/streets-template.html'"></div>
     </div>
   </div>
 </div>
