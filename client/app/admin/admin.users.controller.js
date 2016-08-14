@@ -22,7 +22,8 @@ angular.module('notinphillyServerApp')
        { name: 'address', enableSorting: false },
        { name: 'phoneNumber', enableSorting: false },
        { name: 'isDistributer', enableSorting: false },
-       { name: 'isAdmin', enableSorting: false }
+       { name: 'isAdmin', enableSorting: false },
+       { name: 'adoptedStreets', enableSorting: false, cellTemplate: '<div class="ui-grid-cell-contents" >{{col.entity.streetName}}</div>' }
      ],
      onRegisterApi: function(gridApi) {
        $scope.gridApi = gridApi;

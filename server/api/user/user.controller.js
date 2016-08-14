@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var UserModel = require('./user.model');
 var mailer = require('../../components/mailer');
 var uuid = require('uuid');
+var extend = require('util')._extend;
 
 exports.index = function(req, res) {
     UserModel.find({}, '-salt -hashedPassword -_v -authToken -__v', function(err, users) {
@@ -11,21 +12,25 @@ exports.index = function(req, res) {
 };
 
 exports.getAllPaged = function(req, res) {
-  var page = req.params.pageNumber;
-  var skip = req.params.pageSize;
-  var itemsToSkip = (page - 1) * skip;
+    var page = req.params.pageNumber;
+    var skip = req.params.pageSize;
+    var adoptedStreets = [];
+    var responseData;
+    var itemsToSkip = (page - 1) * skip;
 
-  UserModel.count({}, function( err, count){
+    UserModel.findOne({})
+
+    UserModel.count({}, function( err, count){
       UserModel.find({},
-                    '-salt -hashedPassword -_v -authToken -__v',
-                    {skip:itemsToSkip, limit: skip },
-                    function(err, users) {
-                      if (err) return res.status(500).send(err);
+        '-salt -hashedPassword -_v -authToken -__v',
+        {skip:itemsToSkip, limit: skip })
+        .populate('adoptedStreets').exec(function(err, data) {
+        if (err) return res.status(500).send(err);
+        var data = { users: data, count: count };
+        res.status(200).json(data);
 
-                      var data = { users: users, count: count};
-                      res.status(200).json(data);
-                  });
-  });
+      });
+    });
 
 };
 
